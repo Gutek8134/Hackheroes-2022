@@ -18,23 +18,11 @@ public class PartyManager : MonoBehaviour
         PartyManager.sliders.Add(GameObject.Find("Party").GetComponent<Slider>());
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Grabs last slider for shortening access path
         Slider lastSlider = PartyManager.sliders[PartyManager.sliders.Count - 1];
-        //If its value is not the maximum value
-        if (lastSlider.value < lastSlider.maxValue)
-        {
-            Debug.Log("Something something");
-            //Instantiate new party
-            GameObject party = Instantiate(
-                original: partyPrefab,
-                parent: lastSlider.gameObject.GetComponentInChildren<Handle>().gameObject.transform
-            );
-            party.transform.localScale = new Vector3(0.54f, 2.38f, 1f);
-            PartyManager.sliders.Add(party.GetComponent<Slider>());
-        }
+
         //If any slider reaches its maximum value, every latter is removed
         for (int i = 0; i < PartyManager.sliders.Count; ++i)
         {
@@ -50,5 +38,27 @@ public class PartyManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    int PeopleInParties()
+    {
+        if (PartyManager.sliders.Count == 0)
+            return 0;
+        int sum = 0;
+        foreach (Slider element in sliders)
+            sum += (int)element.value;
+        return sum;
+    }
+
+    public void CreateParty()
+    {
+        Slider lastSlider = PartyManager.sliders[PartyManager.sliders.Count - 1];
+        //Instantiate new party
+        GameObject party = Instantiate(original: partyPrefab, parent: lastSlider.transform.parent);
+        party.transform.localScale = new Vector3(0.54f, 2.38f, 1f);
+        //And add it to the list
+        Slider partySlider = party.GetComponent<Slider>();
+        partySlider.value = partySlider.maxValue;
+        PartyManager.sliders.Add(partySlider);
     }
 }
