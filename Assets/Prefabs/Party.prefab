@@ -33,7 +33,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -0.0000076293945, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &707868193439849957
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 707868193644025480}
   - component: {fileID: 707868193644025481}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PartyName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cca63cbfd65c6d459b27af1716b52cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: 0
 --- !u!1 &707868194964201128
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +569,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.38499856}
+  m_AnchoredPosition: {x: 0.0000076293945, y: 0.38499832}
   m_SizeDelta: {x: 20, y: 18.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &707868194964201132

@@ -40,22 +40,11 @@ public class PartyManager : MonoBehaviour
         }
     }
 
-    int PeopleInParties()
-    {
-        if (PartyManager.sliders.Count == 0)
-            return 0;
-        int sum = 0;
-        foreach (Slider element in sliders)
-            sum += (int)element.value;
-        return sum;
-    }
-
     public void CreateParty()
     {
         Slider lastSlider = PartyManager.sliders[PartyManager.sliders.Count - 1];
         //Instantiate new party
         GameObject party = Instantiate(original: partyPrefab, parent: lastSlider.transform.parent);
-        party.transform.localScale = new Vector3(0.54f, 2.38f, 1f);
         //And add it to the list
         Slider partySlider = party.GetComponent<Slider>();
         partySlider.value = partySlider.maxValue;
