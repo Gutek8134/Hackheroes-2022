@@ -6,7 +6,7 @@ public class Handle : MonoBehaviour
 {
     [SerializeField]
     public TMP_InputField population;
-    private uint position;
+    private int position;
 
     [SerializeField]
     private Slider slider;

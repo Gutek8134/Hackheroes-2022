@@ -533,7 +533,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: 0
-  offset: {x: 36.32, y: 13}
+  width: 40
+  offset: 2.5
 --- !u!1 &707868194964201128
 GameObject:
   m_ObjectHideFlags: 0

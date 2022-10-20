@@ -5,7 +5,7 @@ using TMPro;
 
 public class PartySizer : MonoBehaviour
 {
-    public uint position;
+    public int position;
     private Transform handle,
         partyName;
     private Vector3 originalScale,
@@ -14,11 +14,16 @@ public class PartySizer : MonoBehaviour
     int totalPeople;
 
     private TMP_InputField inputField;
+    private float originalWidth;
+
+    [SerializeField]
+    private float width,
+        offset;
 
     // Start is called before the first frame update
     void Awake()
     {
-        position = (uint)PartyManager.sliders.Count;
+        position = PartyManager.sliders.Count;
         handle = GetComponentInChildren<Handle>().transform;
         partyName = transform.GetChild(0).GetChild(0).GetChild(0);
         partyName.GetComponent<TMP_Text>().text = $"Partia {position + 1}";
@@ -26,6 +31,7 @@ public class PartySizer : MonoBehaviour
         originalScale = transform.localScale;
         originalHandleScale = handle.localScale;
         originalPartyNameScale = partyName.localScale;
+        originalWidth = width;
     }
 
     // Update is called once per frame
@@ -56,7 +62,16 @@ public class PartySizer : MonoBehaviour
             partyName.localScale.y,
             partyName.localScale.z
         );
-        transform.localPosition = PartyManager.sliders[(int)position - 1].handleRect.rect.position;
+
+        UnityEngine.UI.Slider previous = PartyManager.sliders[position - 1];
+        width = previous.maxValue / totalPeople * originalWidth;
+        transform.localPosition = new Vector3(
+            previous.value / previous.maxValue * width
+                + offset
+                + previous.transform.localPosition.x,
+            transform.localPosition.y,
+            0f
+        );
     }
 
     int PeopleInParties()
