@@ -6,6 +6,7 @@ public class PartyManager : MonoBehaviour
 {
     ///<summary>List holding all slider components for parties</summary>
     public static List<Slider> sliders = new List<Slider>();
+    public static List<Color> sliderColors = new List<Color>();
 
     ///<summary>holds prefab for slider managing party voters size</summary>
     [SerializeField]
@@ -18,6 +19,7 @@ public class PartyManager : MonoBehaviour
     {
         //Since the list is static, every element must be added manually
         PartyManager.sliders.Add(GameObject.Find("Party").GetComponent<Slider>());
+        PartyManager.sliderColors.Add(Color.red);
         //Adds elements to the queue
         if (partyColors.Count == 0)
         {
@@ -40,11 +42,12 @@ public class PartyManager : MonoBehaviour
             Slider current = PartyManager.sliders[i];
             if (current.value == current.maxValue)
             {
-                //Can't use List.RemoveRange, because every object also needs to be destroyed as a future-proof feature
+                //Can't use List.RemoveRange, because every object also needs to be destroyed
                 for (int j = PartyManager.sliders.Count - 1; j > i; --j)
                 {
                     Slider toDelete = PartyManager.sliders[j];
-                    PartyManager.sliders.Remove(toDelete);
+                    PartyManager.sliderColors.RemoveAt(j);
+                    PartyManager.sliders.RemoveAt(j);
                     Destroy(toDelete.gameObject);
                 }
             }
@@ -56,13 +59,14 @@ public class PartyManager : MonoBehaviour
         Slider lastSlider = PartyManager.sliders[PartyManager.sliders.Count - 1];
         //Instantiate new party
         GameObject party = Instantiate(original: partyPrefab, parent: lastSlider.transform.parent);
-        //And add it to the list
         Slider partySlider = party.GetComponent<Slider>();
         partySlider.value = partySlider.maxValue;
         Color color = partyColors.Dequeue();
         party.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = color;
         party.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = color;
         partyColors.Enqueue(color);
+        //And add it to the list with its color
         PartyManager.sliders.Add(partySlider);
+        PartyManager.sliderColors.Add(color);
     }
 }
