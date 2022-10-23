@@ -55,7 +55,8 @@ public class BonesButton : MonoBehaviour
         for (int i = 0; i < votes.Count; ++i)
             votes[i] = Mathf.RoundToInt((float)votes[i] * modifiers[i]);
         //Then changes them to match their maximum values
-        while (MoreVotesThanVoters())
+        int iteration = 0;
+        while (MoreVotesThanVoters() && iteration++ < 5)
         {
             for (int i = 0; i < votes.Count; ++i)
             {
@@ -87,7 +88,6 @@ public class BonesButton : MonoBehaviour
 
         //Generates positions for columns
         float[] positions = new float[votes.Count];
-        ElectionColumn.xScale = votes.Count <= 5 ? 1 : 1 - 0.2f * (votes.Count - 5);
         float position,
             step = 120 * ElectionColumn.xScale;
         if (votes.Count % 2 == 0)
@@ -129,6 +129,13 @@ public class BonesButton : MonoBehaviour
                 columns[i].transform.localPosition.y,
                 columns[i].transform.localPosition.z
             );
+        }
+        //Destroys unused columns
+        for (int i = votes.Count; i < columns.Count; ++i)
+        {
+            GameObject obj = columns[i];
+            columns.RemoveAt(votes.Count);
+            Destroy(obj);
         }
     }
 

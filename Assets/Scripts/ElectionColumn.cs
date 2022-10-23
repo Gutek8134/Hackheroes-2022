@@ -41,4 +41,9 @@ public class ElectionColumn : MonoBehaviour
             0
         );
     }
+
+    private void OnDestroy()
+    {
+        lastPosition--;
+    }
 }

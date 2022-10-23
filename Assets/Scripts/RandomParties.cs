@@ -9,28 +9,25 @@ public class RandomParties : MonoBehaviour
         int totalPeople = System.Convert.ToInt32(
             GameObject.Find("PopField").GetComponent<TMPro.TMP_InputField>().text
         );
-        List<Slider> newSliders = new List<Slider>();
-        List<float> modifiers = new List<float>();
-        while (newSliders.Count <= 5 && Random.value < 0.7f)
-        {
-            if (newSliders.Count >= PartyManager.sliders.Count)
+        List<Slider> sliders = new List<Slider>();
+        PartyManager partyManager = GameObject.Find("PartyManager").GetComponent<PartyManager>();
+        if (sliders.Count < 5)
+            do
             {
-                PartyManager.sliders[PartyManager.sliders.Count - 1].value *= .9f;
-                GameObject.Find("PartyManager").GetComponent<PartyManager>().CreateParty();
-            }
-            newSliders.Add(PartyManager.sliders[newSliders.Count]);
-            modifiers.Add(Random.Range(0.1f, 1f));
-        }
-        float sum = 0f;
-        foreach (float mod in modifiers)
-            sum += mod;
-        float scale = Mathf.Clamp(1 / sum, float.Epsilon, float.MaxValue);
-        for (int i = 0; i < newSliders.Count; ++i)
+                if (sliders.Count >= PartyManager.sliders.Count)
+                {
+                    PartyManager.sliders[PartyManager.sliders.Count - 1].value *= .9f;
+                    partyManager.CreateParty();
+                }
+                sliders.Add(PartyManager.sliders[sliders.Count]);
+            } while (sliders.Count <= 5 && Random.value < 0.7f);
+
+        for (int i = 0; i < sliders.Count - 1; ++i)
         {
-            if (i > 0)
-                newSliders[i].maxValue = totalPeople - PeopleInParties(i);
-            newSliders[i].value = totalPeople * modifiers[i];
+            sliders[i].maxValue = totalPeople - PeopleInParties(i);
+            sliders[i].value = sliders[i].maxValue * Random.value;
         }
+        sliders[sliders.Count - 1].value = sliders[sliders.Count - 1].maxValue;
     }
 
     int PeopleInParties(int position)

@@ -18,7 +18,8 @@ public class Handle : MonoBehaviour
         population = GameObject.Find("PopField").GetComponent<TMP_InputField>();
         slider.wholeNumbers = true;
         members = GetComponentInChildren<TMP_Text>();
-        population.text = "100000";
+        if (population.text.Length < 1)
+            population.text = "100000";
         members.text = population.text;
         slider.value = slider.maxValue =
             System.Convert.ToInt32(population.text) - PeopleInParties();

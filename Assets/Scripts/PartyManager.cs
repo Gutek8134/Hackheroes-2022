@@ -12,7 +12,14 @@ public class PartyManager : MonoBehaviour
     [SerializeField]
     private GameObject partyPrefab;
 
-    private Queue<Color> partyColors = new Queue<Color>();
+    private Color[] partyColors =
+    {
+        Color.green,
+        Color.blue,
+        Color.yellow,
+        Color.gray,
+        Color.magenta
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -20,15 +27,6 @@ public class PartyManager : MonoBehaviour
         //Since the list is static, every element must be added manually
         PartyManager.sliders.Add(GameObject.Find("Party").GetComponent<Slider>());
         PartyManager.sliderColors.Add(Color.red);
-        //Adds elements to the queue
-        if (partyColors.Count == 0)
-        {
-            partyColors.Enqueue(Color.green);
-            partyColors.Enqueue(Color.blue);
-            partyColors.Enqueue(Color.yellow);
-            partyColors.Enqueue(Color.gray);
-            partyColors.Enqueue(Color.red);
-        }
     }
 
     void Update()
@@ -56,15 +54,16 @@ public class PartyManager : MonoBehaviour
 
     public void CreateParty()
     {
+        if (sliders.Count >= 5)
+            return;
         Slider lastSlider = PartyManager.sliders[PartyManager.sliders.Count - 1];
         //Instantiate new party
         GameObject party = Instantiate(original: partyPrefab, parent: lastSlider.transform.parent);
         Slider partySlider = party.GetComponent<Slider>();
         partySlider.value = partySlider.maxValue;
-        Color color = partyColors.Dequeue();
+        Color color = partyColors[sliders.Count];
         party.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = color;
         party.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = color;
-        partyColors.Enqueue(color);
         //And add it to the list with its color
         PartyManager.sliders.Add(partySlider);
         PartyManager.sliderColors.Add(color);
