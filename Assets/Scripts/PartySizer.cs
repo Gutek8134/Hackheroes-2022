@@ -17,8 +17,10 @@ public class PartySizer : MonoBehaviour
     private float originalWidth;
 
     [SerializeField]
-    private float width,
-        offset;
+    private float width;
+
+    [SerializeField]
+    private float offset;
 
     // Start is called before the first frame update
     void Awake()

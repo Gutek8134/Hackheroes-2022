@@ -131,10 +131,10 @@ public class BonesButton : MonoBehaviour
             );
         }
         //Destroys unused columns
-        for (int i = votes.Count; i < columns.Count; ++i)
+        for (int i = columns.Count - 1; i >= votes.Count; --i)
         {
             GameObject obj = columns[i];
-            columns.RemoveAt(votes.Count);
+            columns.RemoveAt(i);
             Destroy(obj);
         }
     }

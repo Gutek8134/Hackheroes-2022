@@ -17,7 +17,10 @@ public class FillOverflow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (slider.value / slider.maxValue <= 0.35)
+        int totalPeople = System.Convert.ToInt32(
+            GameObject.Find("PopField").GetComponent<TMP_InputField>().text
+        );
+        if (slider.value / (float)totalPeople <= 0.35)
         {
             partyName.rectTransform.localPosition = new Vector3(0f, 12.5f, 0f);
         }
